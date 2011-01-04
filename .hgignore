@@ -1,0 +1,14 @@
+syntax:glob
+.*
+*~
+*.db
+*.egg-info/*
+*.log
+*.o
+*.orig
+*.patch
+*.pyc
+*.rej
+*.so
+_build
+dist
