@@ -7,11 +7,12 @@ class SQLAHelperTests(unittest.TestCase):
 
     def test_middleware(self):
         environ = {}
-        class Mock(object): pass
+        class Mock(object):
+            def close(self): pass
         mock = Mock()
         def get_mock():
             return mock
-        helper = sqlahelper._SQLAHelper(lambda x, y: None, get_mock)
+        helper = sqlahelper.SQLAHelper(lambda x, y: None, get_mock)
         helper(environ, None)
         assert environ[sqlahelper.SQLA_SESSION_KEY] is mock
 
@@ -37,4 +38,4 @@ class SQLAHelperTests(unittest.TestCase):
 
     def test_with_db(self):
         s = sqlahelper.with_db(None, lambda: None)
-        assert isinstance(s, sqlahelper._SQLAHelper)
+        assert isinstance(s, sqlahelper.SQLAHelper)

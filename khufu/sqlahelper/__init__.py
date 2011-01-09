@@ -18,18 +18,28 @@ def setup_request(event):
 def init_config(config):
     config.add_subscriber(setup_request, NewRequest)
 
-class _SQLAHelper(object):
-    '''WSGI middleware for ensuring there is an active session setup.
+class SQLAHelper(object):
+    '''WSGI middleware for ensuring there is an active session setup and
+    handling a transaction via repoze.tm2
     '''
 
-    def __init__(self, app, session_factory):
-        self.app = app
+    def __init__(self, application, session_factory):
+        self.application = tm.TM(application)
         self.session_factory = session_factory
 
     def __call__(self, environ, start_response):
-        if environ.get(SQLA_SESSION_KEY, None) is None:
-            environ[SQLA_SESSION_KEY] = self.session_factory()
-        return self.app(environ, start_response)
+        session = environ.get(SQLA_SESSION_KEY, None)
+        created = False
+
+        if session is None:
+            session = environ[SQLA_SESSION_KEY] = self.session_factory()
+            created = True
+
+        try:
+            return self.application(environ, start_response)
+        finally:
+            if created:
+                session.close()
 
 def get_session_factory(db):
     '''Returns a session factory based on the given argument.
@@ -47,4 +57,4 @@ def with_db(app, db):
     '''Returns a wrapped (with middleware) app that takes a db argument.
     :param db: Can be a string (database string), sqlalchemy engine, or session factory
     '''
-    return _SQLAHelper(app, get_session_factory(db))
+    return SQLAHelper(app, get_session_factory(db))

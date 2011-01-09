@@ -3,7 +3,7 @@
 Changes
 =======
 
-0.2 (Jan-3-2011)
+0.2 (unreleased)
 ----------------
 
   * first release

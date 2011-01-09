@@ -4,8 +4,8 @@
  Khufu-SQLAHelper
 ==================
 
-Khufu-SQLAHelper is meant to reduce the plumbing required to configure an
-active SQLAlchemy-based database connection with a web app.
+Khufu-SQLAHelper is meant to reduce the plumbing required to configure a
+SQLAlchemy_ based database connection with a Pyramid_ based web app.
 
 
 Requirements
@@ -30,3 +30,6 @@ Credits
 =======
 
   * Developed and maintained by Rocky Burt <rocky AT serverzen DOT com>
+
+.. _SQLAlchemy: http://www.sqlalchemy.org/
+.. _Pyramid: http://docs.pylonshq.com/pyramid/dev/
