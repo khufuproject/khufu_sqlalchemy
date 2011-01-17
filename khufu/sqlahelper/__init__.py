@@ -41,14 +41,18 @@ class SQLAHelper(object):
             if created:
                 session.close()
 
-def get_session_factory(db):
+def get_session_factory(db, use_zope_tm = True):
     '''Returns a session factory based on the given argument.
     :param db: Can be a string (database string), sqlalchemy engine, or session factory
     '''
     if isinstance(db, basestring):  # database string
-        return get_session_factory(sqlalchemy.create_engine(db))
+        return get_session_factory(sqlalchemy.create_engine(db), use_zope_tm)
     elif isinstance(db, Engine):  # engine
-        return get_session_factory(orm.sessionmaker(bind=db, extension=ZopeTransactionExtension()))
+        kwargs = {}
+        if use_zope_tm:
+            kwargs['extension'] = ZopeTransactionExtension()
+
+        return get_session_factory(orm.sessionmaker(bind=db, **kwargs))
 
     # session factory provided
     return db

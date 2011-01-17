@@ -3,7 +3,12 @@
 Changes
 =======
 
-0.2 (Jan-9-2010)
+0.2.1 (Jan-17-2011)
+-------------------
+
+  * Added ``use_zope_tm`` option to ``get_session_factory``
+
+0.2 (Jan-9-2011)
 ----------------
 
   * first release
