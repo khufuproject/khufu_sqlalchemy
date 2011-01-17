@@ -7,9 +7,12 @@ class SQLAHelperTests(unittest.TestCase):
 
     def test_middleware(self):
         environ = {}
+
         class Mock(object):
-            def close(self): pass
+            def close(self):
+                pass
         mock = Mock()
+
         def get_mock():
             return mock
         helper = sqlahelper.SQLAHelper(lambda x, y: None, get_mock)
@@ -26,6 +29,7 @@ class SQLAHelperTests(unittest.TestCase):
     def test_init_config(self):
         class Mock(object):
             called = False
+
             def add_subscriber(self, *args):
                 self.called = True
         m = Mock()

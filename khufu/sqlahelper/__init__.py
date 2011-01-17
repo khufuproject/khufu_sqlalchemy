@@ -1,4 +1,4 @@
-from pyramid.events import subscriber, NewRequest
+from pyramid.events import NewRequest
 import sqlalchemy
 from sqlalchemy import orm
 from sqlalchemy.engine.base import Engine
@@ -15,8 +15,10 @@ def setup_request(event):
     '''
     event.request.db = event.request.environ[SQLA_SESSION_KEY]
 
+
 def init_config(config):
     config.add_subscriber(setup_request, NewRequest)
+
 
 class SQLAHelper(object):
     '''WSGI middleware for ensuring there is an active session setup and
@@ -41,9 +43,13 @@ class SQLAHelper(object):
             if created:
                 session.close()
 
-def get_session_factory(db, use_zope_tm = True):
+
+def get_session_factory(db, use_zope_tm=True):
     '''Returns a session factory based on the given argument.
-    :param db: Can be a string (database string), sqlalchemy engine, or session factory
+    :param db: Can be a string (database string), sqlalchemy engine,
+               or session factory
+    :param use_zope_tm: Whether to hookup the session machinery with
+                        zope.sqlalchemy, defaults to True
     '''
     if isinstance(db, basestring):  # database string
         return get_session_factory(sqlalchemy.create_engine(db), use_zope_tm)
@@ -57,8 +63,10 @@ def get_session_factory(db, use_zope_tm = True):
     # session factory provided
     return db
 
+
 def with_db(app, db):
     '''Returns a wrapped (with middleware) app that takes a db argument.
-    :param db: Can be a string (database string), sqlalchemy engine, or session factory
+    :param db: Can be a string (database string),
+               sqlalchemy engine, or session factory
     '''
     return SQLAHelper(app, get_session_factory(db))
