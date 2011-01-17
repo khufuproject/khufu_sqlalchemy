@@ -26,6 +26,15 @@ To use SQLAHelper there are two steps:
   2. Wrap the web app in the SQLAHelper middleware with
      ``sqlahelper.with_db(app, 'sqlite:///:memory')``
 
+An example::
+
+    config = Configurator(root_factory=models.get_root,
+                          settings=settings,
+                          authentication_policy=authentication_policy,
+                          authorization_policy=authorization_policy)
+  
+  
+
 Credits
 =======
 
