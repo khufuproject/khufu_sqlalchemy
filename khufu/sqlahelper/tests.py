@@ -30,10 +30,13 @@ class SQLAHelperTests(unittest.TestCase):
         class Mock(object):
             called = False
 
+            class registry:
+                settings = {}
+
             def add_subscriber(self, *args):
                 self.called = True
         m = Mock()
-        sqlahelper.init_config(m)
+        sqlahelper.includeme(m)
         assert m.called
 
     def test_get_session_factory(self):
@@ -41,5 +44,8 @@ class SQLAHelperTests(unittest.TestCase):
         assert callable(sf)
 
     def test_with_db(self):
-        s = sqlahelper.with_db(None, lambda: None)
-        assert isinstance(s, sqlahelper.SQLAHelper)
+        class Mock:
+            class registry:
+                settings = {}
+
+        self.assertRaises(ValueError, sqlahelper.with_db, Mock)

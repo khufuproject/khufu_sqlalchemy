@@ -5,8 +5,8 @@ from sqlalchemy.engine.base import Engine
 from zope.sqlalchemy import ZopeTransactionExtension
 from repoze import tm
 
-
-SQLA_SESSION_KEY = 'khufu.sqlalchemy.session'
+SQLALCHEMY_URL = 'sqlalchemy.url'
+SQLA_SESSION_KEY = 'khufu.sqlahelper.db_session'
 
 
 def setup_request(event):
@@ -16,7 +16,7 @@ def setup_request(event):
     event.request.db = event.request.environ[SQLA_SESSION_KEY]
 
 
-def init_config(config):
+def includeme(config):
     config.add_subscriber(setup_request, NewRequest)
 
 
@@ -26,8 +26,8 @@ class SQLAHelper(object):
     '''
 
     def __init__(self, application, session_factory):
-        self.application = tm.TM(application)
         self.session_factory = session_factory
+        self.application = tm.TM(application)
 
     def __call__(self, environ, start_response):
         session = environ.get(SQLA_SESSION_KEY, None)
@@ -44,29 +44,35 @@ class SQLAHelper(object):
                 session.close()
 
 
-def get_session_factory(db, use_zope_tm=True):
+def get_session_factory(db):
     '''Returns a session factory based on the given argument.
     :param db: Can be a string (database string), sqlalchemy engine,
                or session factory
-    :param use_zope_tm: Whether to hookup the session machinery with
-                        zope.sqlalchemy, defaults to True
     '''
     if isinstance(db, basestring):  # database string
-        return get_session_factory(sqlalchemy.create_engine(db), use_zope_tm)
+        return get_session_factory(sqlalchemy.create_engine(db))
     elif isinstance(db, Engine):  # engine
-        kwargs = {}
-        if use_zope_tm:
-            kwargs['extension'] = ZopeTransactionExtension()
-
-        return get_session_factory(orm.sessionmaker(bind=db, **kwargs))
+        return orm.sessionmaker(bind=db, extension=ZopeTransactionExtension())
 
     # session factory provided
     return db
 
 
-def with_db(app, db):
-    '''Returns a wrapped (with middleware) app that takes a db argument.
-    :param db: Can be a string (database string),
-               sqlalchemy engine, or session factory
+def with_db(app, db=None):
+    '''Returns a wrapped (with middleware) app.
+
+    :param app: The WSGI application to wrap
+    :param db: Can be a string (database string), sqlalchemy engine,
+               or sqlalchemy session factory.  If not provided, sqla url
+               is looked up in the pyramid registry settings (provided
+               by ``app.registry.settings[SQLALCHEMY_URL]``)
     '''
+
+    if db is None:
+        db = app.registry.settings.get(SQLALCHEMY_URL, None)
+
+    if db is None:
+        raise ValueError('Either the db param or settings[SQLALCHEMY_URL]'
+                         ' must be provided')
+
     return SQLAHelper(app, get_session_factory(db))

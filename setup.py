@@ -11,7 +11,7 @@ requires = ['setuptools',
             'zope.sqlalchemy']
 
 setup(name='Khufu-SQLAHelper',
-      version='0.2.1',
+      version='0.3',
       description='Khufu component for using SQLAlchemy with Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
