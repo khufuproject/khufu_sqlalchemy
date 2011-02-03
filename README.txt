@@ -12,10 +12,11 @@ Requirements
 ============
 
   * Python 2.6 or 2.7 (not tested with Python 3.x)
-  * SQLAlchemy
-  * zope.sqlalchemy
-  * repoze.tm2
-  * transaction
+  * Pyramid_
+  * SQLAlchemy_
+  * `zope.sqlalchemy`_
+  * `repoze.tm2`_
+  * transaction_
 
 *NOTE 1: The SQLAHelper middleware includes the repoze.tm2 middleware*
 *NOTE 2: The SQLAHelper middleware requires that the app being wrapped was
@@ -26,9 +27,9 @@ Usage
 
 To use SQLAHelper there are two steps:
 
-  1. Hook up the configuration via ``sqlahelper.init_config(configurator)``
+  1. Hook up the configuration via ``configurator.include('khufu.sqlahelper')``
   2. Wrap the web app in the SQLAHelper middleware with
-     ``sqlahelper.with_db(app)``
+     ``khufu.sqlahelper.with_db(pyramid_app)``
 
 Once inside a SQLAHelper-wrapped application, the database session is
 accessed via ``request.db``.
@@ -79,3 +80,5 @@ Credits
 .. _SQLAlchemy: http://www.sqlalchemy.org/
 .. _Pyramid: http://docs.pylonshq.com/pyramid/dev/
 .. _transaction: http://pypi.python.org/pypi/transaction
+.. _`zope.sqlalchemy`: http://pypi.python.org/pypi/zope.sqlalchemy
+.. _`repoze.tm2`: http://docs.repoze.org/tm2/
