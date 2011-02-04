@@ -66,11 +66,12 @@ following things:
   1. Registers a SQLAlchemy based session factory and stores it in the middleware
   2. Uses zope.sqlalchemy to connect that session factory to the transaction handling
   3. Uses middleware to do the following:
+
     i) At the start of a request, a new session is created and stuffed into the environ
     ii) Using a BeforeRequest event, the active session is retrieved from environ and
         added onto the request as the *db* attribute.
-    ii) At the end of the request, either commit the session/transaction if
-        no error occurred, else rollback (provided by *repoze.tm2*).
+    iii) At the end of the request, either commit the session/transaction if
+         no error occurred, else rollback (provided by *repoze.tm2*).
 
 Credits
 =======
