@@ -3,8 +3,8 @@
 Changes
 =======
 
-0.3 (unreleased)
-----------------
+0.3 (Feb-04-2011)
+-----------------
 
   * Changed ``with_db`` api to make db param optional
 
