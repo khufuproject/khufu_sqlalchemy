@@ -3,8 +3,8 @@
 Changes
 =======
 
-0.4 (unreleased)
-----------------
+0.4a1 (Feb-10-2011)
+-------------------
 
   * Added traversalutils for helping expose SQL-based models
     using traversal 
