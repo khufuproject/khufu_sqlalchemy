@@ -5,13 +5,16 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
-requires = ['setuptools',
-            'SQLAlchemy >= 0.6.1',
-            'repoze.tm2',
-            'zope.sqlalchemy']
+requires = [
+    'pyramid_traversalwrapper',
+    'repoze.tm2',
+    'setuptools',
+    'SQLAlchemy >= 0.6.1',
+    'zope.sqlalchemy',
+    ]
 
 setup(name='Khufu-SQLAHelper',
-      version='0.3',
+      version='0.4',
       description='Khufu component for using SQLAlchemy with Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
