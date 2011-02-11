@@ -3,6 +3,11 @@
 Changes
 =======
 
+0.4a2 (Feb-11-2011)
+-------------------
+
+  * Fixed small issue where decorator wasn't working
+
 0.4a1 (Feb-10-2011)
 -------------------
 

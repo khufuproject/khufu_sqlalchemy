@@ -17,6 +17,7 @@ class attrs_traversable(object):
     def __call__(self, cls):
         cls.wrap = _AttrIterableWrapper.create_class(cls.__name__,
                                                      self.iterable_attrs)
+        return cls
 
 
 class _AttrIterableWrapper(LocationProxy):

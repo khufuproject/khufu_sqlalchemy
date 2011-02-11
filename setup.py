@@ -14,7 +14,7 @@ requires = [
     ]
 
 setup(name='Khufu-SQLAHelper',
-      version='0.4a1',
+      version='0.4a2',
       description='Khufu component for using SQLAlchemy with Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
