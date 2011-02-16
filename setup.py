@@ -14,7 +14,7 @@ requires = [
     ]
 
 setup(name='Khufu-SQLAHelper',
-      version='0.4a2',
+      version='0.4a3',
       description='Khufu component for using SQLAlchemy with Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
@@ -26,7 +26,7 @@ setup(name='Khufu-SQLAHelper',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
       namespace_packages=['khufu'],
-      url='http://bitbucket.org/rockyburt/khufu-sqlahelper',
+      url='https://github.com/serverzen/Khufu-SQLAHelper',
       keywords='web pyramid sqlalchemy',
       packages=find_packages(),
       include_package_data=True,
