@@ -1,10 +1,10 @@
 .. -*-rst-*-
 
 ==================
- Khufu-SQLAHelper
+ Khufu-PyraSQLAlchemy
 ==================
 
-Khufu-SQLAHelper is meant to reduce the plumbing required to configure a
+Khufu-PyraSQLAlchemy is meant to reduce the plumbing required to configure a
 SQLAlchemy_ based database connection with a Pyramid_ based web app.
 
 
@@ -104,7 +104,7 @@ please use the transaction_ api.
 Under the Hood
 ==============
 
-There is nothing magical about *Khufu-SQLAHelper*.  It does the
+There is nothing magical about *Khufu-PyraSQLAlchemy*.  It does the
 following things:
 
   1. Registers a SQLAlchemy based session factory and stores it in the middleware
