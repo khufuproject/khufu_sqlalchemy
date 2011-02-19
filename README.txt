@@ -35,20 +35,20 @@ Database Configuration
 
 To use SQLAHelper database configuration there are two steps:
 
-  1. Hook up the configuration via ``configurator.include('khufu.sqlahelper')``
+  1. Hook up the configuration via ``configurator.include('khufu.pyrasqlalchemy')``
   2. Wrap the web app in the SQLAHelper middleware with
-     ``khufu.sqlahelper.with_db(pyramid_app)``
+     ``khufu.pyrasqlalchemy.with_db(pyramid_app)``
 
 Once inside a SQLAHelper-wrapped application, the database session is
 accessed via ``request.db``.
 
-An example which sets up a new wsgi app wrapped in the sqlahelper middlewares...
-the database connection is built based on the *sqlalchemy.url* value::
+An example which sets up a new wsgi app wrapped in the ``khufu.pyrasqlalchemy``
+middlewares... the database connection is built based on the *sqlalchemy.url* value::
 
     config = Configurator(root_factory=models.get_root,
                           settings={'sqlalchemy.url': 'sqlite://:memory'})
-    config.include('khufu.sqlahelper')
-    app = sqlahelper.with_db(config.make_wsgi_app())  
+    config.include('khufu.pyrasqlalchemy')
+    app = khufu.pyrasqlalchemy.with_db(config.make_wsgi_app())  
 
 Once inside view code, database queries can happen as follows::
 

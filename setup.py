@@ -13,8 +13,8 @@ requires = [
     'zope.sqlalchemy',
     ]
 
-setup(name='Khufu-SQLAHelper',
-      version='0.4a3',
+setup(name='Khufu-PyraSQLAlchemy',
+      version='0.4a4',
       description='Khufu component for using SQLAlchemy with Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
@@ -26,12 +26,12 @@ setup(name='Khufu-SQLAHelper',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
       namespace_packages=['khufu'],
-      url='https://github.com/serverzen/Khufu-SQLAHelper',
+      url='https://github.com/serverzen/Khufu-PyraSQLAlchemy',
       keywords='web pyramid sqlalchemy',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
       install_requires=requires,
-      test_suite="khufu.sqlahelper.tests",
+      test_suite="khufu.pyrasqlalchemy.tests",
       entry_points="",
       )
