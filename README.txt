@@ -1,8 +1,8 @@
 .. -*-rst-*-
 
-==================
+======================
  Khufu-PyraSQLAlchemy
-==================
+======================
 
 Khufu-PyraSQLAlchemy is meant to reduce the plumbing required to configure a
 SQLAlchemy_ based database connection with a Pyramid_ based web app.
