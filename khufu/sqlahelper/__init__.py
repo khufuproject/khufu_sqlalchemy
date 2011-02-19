@@ -55,6 +55,10 @@ def get_session_factory(db):
         return orm.sessionmaker(bind=db, extension=ZopeTransactionExtension())
 
     # session factory provided
+    if not callable(db):
+        raise TypeError('Session factory arg must be either a sqlalchemy url, '
+                        'an instance of sqlalchemy Engine, or a session '
+                        'factory, not: %s' % str(type(db)))
     return db
 
 

@@ -43,12 +43,20 @@ class SQLAHelperTests(unittest.TestCase):
         sf = sqlahelper.get_session_factory('sqlite://')
         assert callable(sf)
 
+        def mycallable(): None
+        self.assertEquals(sqlahelper.get_session_factory(mycallable),
+                          mycallable)
+
+        self.assertRaises(TypeError, sqlahelper.get_session_factory, object())
+
     def test_with_db(self):
         class Mock:
             class registry:
                 settings = {}
 
         self.assertRaises(ValueError, sqlahelper.with_db, Mock)
+
+        sqlahelper.with_db(object(), lambda: None)
 
 
 from khufu.sqlahelper import traversalutils
@@ -82,6 +90,9 @@ class TraversalTests(unittest.TestCase):
         self.assertRaises(KeyError, lambda: c['foo'])
         assert isinstance(c['abc'], Mock)
 
+        w = traversalutils._AttrIterableWrapper('foo', 'bar')
+        self.assertRaises(NotImplementedError, lambda: w['abc'])
+
     def test_TraversalMixin(self):
         m1 = object()
         m2 = object()
@@ -99,6 +110,7 @@ class TraversalDataContainerTests(unittest.TestCase):
     class Mock(object):
         def __init__(self, **kwargs):
             self.__dict__.update(kwargs)
+            self.id = 'mock_id'
 
     class MockSession(set):
         def query(self, *args, **kwargs):
@@ -137,3 +149,7 @@ class TraversalDataContainerTests(unittest.TestCase):
             model_class = None
         dc = MockContainer()
         self.assertRaises(NotImplementedError, lambda: dc['k'])
+
+    def test_iter(self):
+        dc = self.MockContainer()
+        self.assertEquals([x.id for x in dc], ['mock_id'])
