@@ -17,6 +17,8 @@ def setup_request(event):
 
 
 def includeme(config):
+    '''Register components with the pyramid Configurator instance.'''
+
     config.add_subscriber(setup_request, NewRequest)
 
 
@@ -46,6 +48,7 @@ class SQLAHelper(object):
 
 def get_session_factory(db):
     '''Returns a session factory based on the given argument.
+
     :param db: Can be a string (database string), sqlalchemy engine,
                or session factory
     '''
