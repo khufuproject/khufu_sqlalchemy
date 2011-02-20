@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Khufu-PyraSQLAlchemy documentation build configuration file, created by
+# khufu_sqlalchemy documentation build configuration file, created by
 # sphinx-quickstart on Sat Feb 19 17:52:25 2011.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Khufu-PyraSQLAlchemy'
+project = u'khufu_sqlalchemy'
 copyright = u'2011, Rocky Burt'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -176,7 +176,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Khufu-PyraSQLAlchemydoc'
+htmlhelp_basename = 'khufu_sqlalchemydoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -190,7 +190,7 @@ htmlhelp_basename = 'Khufu-PyraSQLAlchemydoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Khufu-PyraSQLAlchemy.tex', u'Khufu-PyraSQLAlchemy Documentation',
+  ('index', 'khufu_sqlalchemy.tex', u'khufu_sqlalchemy Documentation',
    u'Rocky Burt', 'manual'),
 ]
 
@@ -223,6 +223,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'khufu-pyrasqlalchemy', u'Khufu-PyraSQLAlchemy Documentation',
+    ('index', 'khufu_sqlalchemy', u'khufu_sqlalchemy Documentation',
      [u'Rocky Burt'], 1)
 ]

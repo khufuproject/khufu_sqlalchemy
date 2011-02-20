@@ -1,9 +1,9 @@
-.. _khufu.pyrasqlalchemy_api:
+.. _khufu_sqlalchemy_api:
 
-:mod:`khufu.pyrasqlalchemy` API
+:mod:`khufu_sqlalchemy` API
 -------------------------------
 
-.. automodule:: khufu.pyrasqlalchemy
+.. automodule:: khufu_sqlalchemy
 
 .. autofunction:: includeme
 .. autofunction:: get_session_factory

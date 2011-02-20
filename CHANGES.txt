@@ -3,7 +3,12 @@
 Changes
 =======
 
-0.4a3 (Feb-16,2011)
+0.4a4 (Feb-20-2011)
+-------------------
+
+  * Renamed from Khufu-SQLAHelper to khufu_sqlalchemy
+
+0.4a3 (Feb-16-2011)
 -------------------
 
   * Updated project url's

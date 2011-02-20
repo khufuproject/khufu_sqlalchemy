@@ -4,7 +4,7 @@ import unittest
 class SQLAHelperTests(unittest.TestCase):
 
     def test_middleware(self):
-        from khufu.pyrasqlalchemy import SQLAHelper, SQLA_SESSION_KEY
+        from khufu_sqlalchemy import SQLAHelper, SQLA_SESSION_KEY
 
         environ = {}
 
@@ -20,7 +20,7 @@ class SQLAHelperTests(unittest.TestCase):
         assert environ[SQLA_SESSION_KEY] is mock
 
     def test_setup_request(self):
-        from khufu.pyrasqlalchemy import SQLA_SESSION_KEY, setup_request
+        from khufu_sqlalchemy import SQLA_SESSION_KEY, setup_request
 
         class Mock(object):
             class request(object):
@@ -29,7 +29,7 @@ class SQLAHelperTests(unittest.TestCase):
         assert Mock.request.environ[SQLA_SESSION_KEY] is 'foo'
 
     def test_init_config(self):
-        from khufu.pyrasqlalchemy import includeme
+        from khufu_sqlalchemy import includeme
 
         class Mock(object):
             called = False
@@ -44,7 +44,7 @@ class SQLAHelperTests(unittest.TestCase):
         assert m.called
 
     def test_get_session_factory(self):
-        from khufu.pyrasqlalchemy import get_session_factory
+        from khufu_sqlalchemy import get_session_factory
 
         sf = get_session_factory('sqlite://')
         assert callable(sf)
@@ -56,7 +56,7 @@ class SQLAHelperTests(unittest.TestCase):
         self.assertRaises(TypeError, get_session_factory, object())
 
     def test_with_db(self):
-        from khufu.pyrasqlalchemy import with_db, SQLAHelper
+        from khufu_sqlalchemy import with_db, SQLAHelper
 
         class Mock:
             class registry:
@@ -70,7 +70,7 @@ class SQLAHelperTests(unittest.TestCase):
 class TraversalTests(unittest.TestCase):
 
     def test_attrs_traversable_init(self):
-        from khufu.pyrasqlalchemy.traversalutils import attrs_traversable
+        from khufu_sqlalchemy.traversalutils import attrs_traversable
 
         c = attrs_traversable()
         assert c.iterable_attrs == {}
@@ -79,7 +79,7 @@ class TraversalTests(unittest.TestCase):
         assert c.iterable_attrs == {}
 
     def test_attrs_traversable_call(self):
-        from khufu.pyrasqlalchemy.traversalutils import (attrs_traversable,
+        from khufu_sqlalchemy.traversalutils import (attrs_traversable,
                                                      _AttrIterableWrapper)
         c = attrs_traversable()
 
@@ -89,7 +89,7 @@ class TraversalTests(unittest.TestCase):
         assert issubclass(Mock.wrap, _AttrIterableWrapper)
 
     def test_AttrIterableWrapper(self):
-        from khufu.pyrasqlalchemy.traversalutils import _AttrIterableWrapper
+        from khufu_sqlalchemy.traversalutils import _AttrIterableWrapper
 
         class Mock(object):
             def __init__(self, *args, **kwargs):
@@ -104,7 +104,7 @@ class TraversalTests(unittest.TestCase):
         self.assertRaises(NotImplementedError, lambda: w['abc'])
 
     def test_TraversalMixin(self):
-        from khufu.pyrasqlalchemy.traversalutils import TraversalMixin
+        from khufu_sqlalchemy.traversalutils import TraversalMixin
 
         m1 = object()
         m2 = object()
@@ -118,7 +118,7 @@ class TraversalTests(unittest.TestCase):
         assert tm.db is m2
 
 
-from khufu.pyrasqlalchemy.traversalutils import DataContainer
+from khufu_sqlalchemy.traversalutils import DataContainer
 
 
 class TraversalDataContainerTests(unittest.TestCase):

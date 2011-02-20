@@ -31,8 +31,8 @@ Glossary
      `pyramid_traversalwrapper distribution <http://pypi.python.org/pypi/pyramid_traversalwrapper>`_
      provides proxy wrappers for objects.
 
-   Khufu-PyraSQLAlchemy
-     `Khufu-PyraSQLAlchemy <https://github.com/serverzen/Khufu-PyraSQLAlchemy>`_ 
+   khufu_sqlalchemy
+     `khufu_sqlalchemy <https://github.com/serverzen/khufu_sqlalchemy>`_ 
      is meant to reduce the plumbing required to configure a :term:`SQLAlchemy`
      based database connection with a :term:`Pyramid` based web app.
 

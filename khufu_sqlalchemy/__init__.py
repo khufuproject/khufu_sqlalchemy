@@ -6,7 +6,7 @@ from zope.sqlalchemy import ZopeTransactionExtension
 from repoze import tm
 
 SQLALCHEMY_URL = 'sqlalchemy.url'
-SQLA_SESSION_KEY = 'khufu.pyrasqlalchemy.db_session'
+SQLA_SESSION_KEY = 'khufu_sqlalchemy.db_session'
 
 
 def setup_request(event):

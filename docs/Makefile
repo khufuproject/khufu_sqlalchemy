@@ -72,17 +72,17 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/Khufu-PyraSQLAlchemy.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/khufu_sqlalchemy.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/Khufu-PyraSQLAlchemy.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/khufu_sqlalchemy.qhc"
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/Khufu-PyraSQLAlchemy"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/Khufu-PyraSQLAlchemy"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/khufu_sqlalchemy"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/khufu_sqlalchemy"
 	@echo "# devhelp"
 
 epub:

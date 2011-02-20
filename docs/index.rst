@@ -1,11 +1,11 @@
-====================
-Khufu-PyraSQLAlchemy
-====================
+================
+khufu_sqlalchemy
+================
 
 Overview
 ========
 
-Khufu-PyraSQLAlchemy is meant to reduce the plumbing required to configure a
+khufu_sqlalchemy is meant to reduce the plumbing required to configure a
 :term:`SQLAlchemy` based database connection with a :term:`Pyramid` based web app.
 
 
@@ -36,14 +36,14 @@ Database Configuration
 
 To use SQLAHelper database configuration there are two steps:
 
-  1. Hook up the configuration via ``configurator.include('khufu.pyrasqlalchemy')``
+  1. Hook up the configuration via ``configurator.include('khufu_sqlalchemy')``
   2. Wrap the web app in the SQLAHelper middleware with
-     ``khufu.pyrasqlalchemy.with_db(pyramid_app)``
+     ``khufu_sqlalchemy.with_db(pyramid_app)``
 
 Once inside a SQLAHelper-wrapped application, the database session is
 accessed via ``request.db``.
 
-An example which sets up a new wsgi app wrapped in the ``khufu.pyrasqlalchemy``
+An example which sets up a new wsgi app wrapped in the ``khufu_sqlalchemy``
 middlewares... the database connection is built based on the :term:`sqlalchemy.url` value:
 
 .. code-block:: python
@@ -51,8 +51,8 @@ middlewares... the database connection is built based on the :term:`sqlalchemy.u
 
  config = Configurator(root_factory=models.get_root,
                        settings={'sqlalchemy.url': 'sqlite://:memory'})
- config.include('khufu.pyrasqlalchemy')
- app = khufu.pyrasqlalchemy.with_db(config.make_wsgi_app())  
+ config.include('khufu_sqlalchemy')
+ app = khufu_sqlalchemy.with_db(config.make_wsgi_app())  
 
 Once inside view code, database queries can happen as follows:
 
@@ -114,7 +114,7 @@ please use the :term:`transaction` api.
 Under the Hood
 ==============
 
-There is nothing magical about :term:`Khufu-PyraSQLAlchemy`.  It does the
+There is nothing magical about :term:`khufu_sqlalchemy`.  It does the
 following things:
 
   1. Registers a :term:`SQLAlchemy` based session factory and stores it in the middleware

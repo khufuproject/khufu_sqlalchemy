@@ -13,9 +13,9 @@ requires = [
     'zope.sqlalchemy',
     ]
 
-setup(name='Khufu-PyraSQLAlchemy',
+setup(name='khufu_sqlalchemy',
       version='0.4a4',
-      description='Khufu component for using SQLAlchemy with Pyramid',
+      description='SQLAlchemy bindings for Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
         "License :: OSI Approved :: BSD License",
@@ -25,13 +25,12 @@ setup(name='Khufu-PyraSQLAlchemy',
       license='BSD',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
-      namespace_packages=['khufu'],
-      url='https://github.com/serverzen/Khufu-PyraSQLAlchemy',
-      keywords='web pyramid sqlalchemy',
+      url='https://github.com/serverzen/khufu_sqlalchemy',
+      keywords='pyramid sqlalchemy khufu',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
       install_requires=requires,
-      test_suite="khufu.pyrasqlalchemy.tests",
+      test_suite="khufu_sqlalchemy.tests",
       entry_points="",
       )
