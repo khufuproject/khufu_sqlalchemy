@@ -6,8 +6,8 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
+    'pyramid_tm',
     'pyramid_traversalwrapper',
-    'repoze.tm2',
     'setuptools',
     'SQLAlchemy >= 0.6.1',
     'zope.sqlalchemy',
@@ -26,11 +26,11 @@ setup(name='khufu_sqlalchemy',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
       url='https://github.com/serverzen/khufu_sqlalchemy',
-      keywords='pyramid sqlalchemy khufu',
+      keywords='pyramid sqlalchemy khufu transaction',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
       install_requires=requires,
       test_suite="khufu_sqlalchemy.tests",
-      entry_points="",
+      entry_points='',
       )

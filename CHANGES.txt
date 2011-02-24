@@ -3,6 +3,13 @@
 Changes
 =======
 
+0.5b1 (unreleased)
+------------------
+
+  * Backwards incompat changes with 0.4, please stay with 0.4
+    to continue using middleware
+
+
 0.4a4 (Feb-20-2011)
 -------------------
 

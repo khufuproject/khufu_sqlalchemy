@@ -1,170 +1,82 @@
 import unittest
 
 
-class SQLAHelperTests(unittest.TestCase):
+class Mock(object):
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
 
-    def test_middleware(self):
-        from khufu_sqlalchemy import SQLAHelper, SQLA_SESSION_KEY
 
-        environ = {}
+class TestSetupFactory(unittest.TestCase):
 
-        class Mock(object):
-            def close(self):
-                pass
-        mock = Mock()
+    def setUp(self):
+        self.settings = {}
+        self.registry = Mock(settings=self.settings)
 
-        def get_mock():
-            return mock
-        helper = SQLAHelper(lambda x, y: None, get_mock)
-        helper(environ, None)
-        assert environ[SQLA_SESSION_KEY] is mock
+    def test_factory_exists(self):
+        from khufu_sqlalchemy import _setup_factory, DBSESSION_FACTORY
 
-    def test_setup_request(self):
-        from khufu_sqlalchemy import SQLA_SESSION_KEY, setup_request
+        def m(): pass
+        self.settings[DBSESSION_FACTORY] = m
+        self.assertEqual(_setup_factory(self.registry), m)
 
-        class Mock(object):
-            class request(object):
-                environ = {SQLA_SESSION_KEY: 'foo'}
-        setup_request(Mock)
-        assert Mock.request.environ[SQLA_SESSION_KEY] is 'foo'
+    def test_engine_exists(self):
+        from khufu_sqlalchemy import (
+            _setup_factory, DBSESSION_ENGINE, DBSESSION_FACTORY)
 
-    def test_init_config(self):
+        self.settings[DBSESSION_ENGINE] = object()
+        _setup_factory(self.registry)
+        self.assertTrue(DBSESSION_FACTORY in self.settings)
+
+    def test_sqlalchemy_url(self):
+        from khufu_sqlalchemy import (
+            _setup_factory, SQLALCHEMY_URL, DBSESSION_FACTORY)
+        self.settings[SQLALCHEMY_URL] = 'sqlite:///:memory'
+        _setup_factory(self.registry)
+        self.assertTrue(DBSESSION_FACTORY in self.settings)
+
+
+class TestIncludeMe(unittest.TestCase):
+
+    def test_it(self):
         from khufu_sqlalchemy import includeme
 
-        class Mock(object):
-            called = False
+        class MockConfig(object):
+            def __init__(self):
+                self.registry = Mock(settings={})
 
-            class registry:
-                settings = {}
-
-            def add_subscriber(self, *args):
-                self.called = True
-        m = Mock()
-        includeme(m)
-        assert m.called
-
-    def test_get_session_factory(self):
-        from khufu_sqlalchemy import get_session_factory
-
-        sf = get_session_factory('sqlite://')
-        assert callable(sf)
-
-        def mycallable(): None
-        self.assertEquals(get_session_factory(mycallable),
-                          mycallable)
-
-        self.assertRaises(TypeError, get_session_factory, object())
-
-    def test_with_db(self):
-        from khufu_sqlalchemy import with_db, SQLAHelper
-
-        class Mock:
-            class registry:
-                settings = {}
-
-        self.assertRaises(ValueError, with_db, Mock)
-        self.assertTrue(isinstance(with_db(object(),
-                                           lambda: None), SQLAHelper))
-
-
-class TraversalTests(unittest.TestCase):
-
-    def test_attrs_traversable_init(self):
-        from khufu_sqlalchemy.traversalutils import attrs_traversable
-
-        c = attrs_traversable()
-        assert c.iterable_attrs == {}
-
-        c = attrs_traversable({})
-        assert c.iterable_attrs == {}
-
-    def test_attrs_traversable_call(self):
-        from khufu_sqlalchemy.traversalutils import (attrs_traversable,
-                                                     _AttrIterableWrapper)
-        c = attrs_traversable()
-
-        class Mock(object):
-            pass
-        c(Mock)
-        assert issubclass(Mock.wrap, _AttrIterableWrapper)
-
-    def test_AttrIterableWrapper(self):
-        from khufu_sqlalchemy.traversalutils import _AttrIterableWrapper
-
-        class Mock(object):
-            def __init__(self, *args, **kwargs):
+            def include(self, m):
                 pass
+        m = MockConfig()
 
-        cls = _AttrIterableWrapper.create_class(Mock.__name__, {'abc': Mock})
-        c = cls(None, None)
-        self.assertRaises(KeyError, lambda: c['foo'])
-        assert isinstance(c['abc'], Mock)
-
-        w = _AttrIterableWrapper('foo', 'bar')
-        self.assertRaises(NotImplementedError, lambda: w['abc'])
-
-    def test_TraversalMixin(self):
-        from khufu_sqlalchemy.traversalutils import TraversalMixin
-
-        m1 = object()
-        m2 = object()
-
-        class Mock(object):
-            db = m1
-        tm = TraversalMixin(parent=Mock)
-        assert tm.db is m1
-
-        tm = TraversalMixin(db=m2)
-        assert tm.db is m2
+        self.assertRaises(KeyError, includeme, m)
 
 
-from khufu_sqlalchemy.traversalutils import DataContainer
+class TestDBSession(unittest.TestCase):
 
+    def test_already_exists(self):
+        from khufu_sqlalchemy import dbsession, DBSESSION
+        marker = object()
+        req = Mock(environ={DBSESSION: marker})
+        self.assertEqual(dbsession(req), marker)
 
-class TraversalDataContainerTests(unittest.TestCase):
-    class Mock(object):
-        def __init__(self, **kwargs):
-            self.__dict__.update(kwargs)
-            self.id = 'mock_id'
+    def test_context(self):
+        from sqlalchemy.orm.exc import UnmappedInstanceError
+        from khufu_sqlalchemy import dbsession
+        req = Mock(environ={}, context=Mock())
+        self.assertRaises(UnmappedInstanceError, dbsession, req)
 
-    class MockSession(set):
-        def query(self, *args, **kwargs):
-            return self
+        req.context.db = marker = object()
+        self.assertEqual(dbsession(req), marker)
 
-        def get(self, k):
-            return list(self)[0]
+    def test_create(self):
+        from khufu_sqlalchemy import dbsession, DBSESSION_FACTORY
 
-    _db = MockSession()
+        self.assertEqual(dbsession(Mock(environ={}), create=False), None)
 
-    class MockContainer(DataContainer):
-        pass
-    MockContainer.model_class = Mock
-    MockContainer.db = _db
+        marker = object()
 
-    def test_add(self):
-        dc = self.MockContainer('someattr', self.Mock())
-        dc.add(foo=1)
-
-        assert len(self._db) == 1
-
-        assert isinstance(dc.get_unwrapped_object('foo'), self.Mock)
-        dc.unique_lookup = 'grr'
-
-        self.Mock.someattr = []
-        self.assertRaises(KeyError, lambda: dc.get_unwrapped_object('foo'))
-
-        self.Mock.someattr = [self.Mock(grr='foo')]
-        assert isinstance(dc.get_unwrapped_object('foo'), self.Mock)
-
-    def test_getitem(self):
-        dc = self.MockContainer()
-        assert isinstance(dc['k'], self.Mock)
-
-        class MockContainer(self.MockContainer):
-            model_class = None
-        dc = MockContainer()
-        self.assertRaises(NotImplementedError, lambda: dc['k'])
-
-    def test_iter(self):
-        dc = self.MockContainer()
-        self.assertEquals([x.id for x in dc], ['mock_id'])
+        def foo():
+            return marker
+        m = Mock(environ={},
+                 registry=Mock(settings={DBSESSION_FACTORY: foo}))
+        self.assertEqual(dbsession(m, create=True), marker)
