@@ -11,7 +11,7 @@ connections with :term:`Pyramid`.
 Requirements
 ============
 
-  * Python >= 2.6 (not tested with Python 3.x series)
+  * Python >= 2.5 (not tested with Python 3.x series)
 
 Setup
 =====
@@ -60,7 +60,6 @@ to have one of the three prerequisites fulfilled within the
       config = Configurator(settings={'khufu.dbsession_factory': Session})
       config.include('khufu_sqlalchemy')
 
-
 Usage
 =====
 
@@ -69,34 +68,21 @@ The standard way to lookup the active database session is as follows:
 .. code-block:: python
  :linenos:
 
+ from pyramid.view import view_config
  from pyramid_sqlalchemy import dbsession
 
- @view_config(context=models.SomeContainerModel)
+ @view_config(context=SomeContainer)
  def users_view(request):
      db = dbsession(request)
-     return {'items': db.query(models.SomeModel).all()}
+     return {'items': db.query(SomeDBModel).all()}
 
-NOTE: The ``db`` object is a simple instance of a :term:`SQLAlchemy`
+NOTE #1: The ``db`` object is a simple instance of a :term:`SQLAlchemy`
 database session.  You should never commit this directly or worry
 about closing it.  The :term:`transaction` package takes care of this.
 
-Database Traversal Utils
-------------------------
-
-:term:`khufu_sqlalchemy` also provides helper utils for building SQL
-and :term:`traversal` based web services.
-
-Here's an example layout of managing users and groups based on
-the traversal helpers::
-
-  /
-  /users/
-  /users/<userid>/
-  /groups/
-  /groups/<groupid>/
-
-*Work in progress*
-
+NOTE #2: The :term:`SQLAlchemy` database session is created lazily
+upon first dbsession() use.  Multiple calls to dbsession(request)
+will each return the same session as long as the request is the same.
 
 Transaction Handling
 ====================
@@ -104,12 +90,10 @@ Transaction Handling
 If your application requires control over the transaction handling,
 please use the :term:`transaction` and :term:`pyramid_tm` api's.
 
-
 Credits
 =======
 
   * Developed and maintained by Rocky Burt <rocky AT serverzen DOT com>
-
 
 More Information
 ================

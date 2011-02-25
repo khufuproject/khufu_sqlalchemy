@@ -7,14 +7,13 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'pyramid_tm',
-    'pyramid_traversalwrapper',
     'setuptools',
     'SQLAlchemy >= 0.6.1',
     'zope.sqlalchemy',
     ]
 
 setup(name='khufu_sqlalchemy',
-      version='0.4a4',
+      version='0.5a1',
       description='SQLAlchemy bindings for Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
