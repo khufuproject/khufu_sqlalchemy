@@ -46,8 +46,8 @@ class _AttrIterableWrapper(LocationProxy):
 
 
 class TraversalMixin(object):
-    """A mixin to provide name, parent, and db attributes.
-    """
+    """A mixin to provide name, parent, and db attributes."""
+
     __name__ = None
     __parent__ = None
     db = None
@@ -62,7 +62,12 @@ class TraversalMixin(object):
         if self._db is not None:
             return self._db
 
-        return self.__parent__.db
+        parent = self.__parent__
+        while parent is not None:
+            if hasattr(parent, 'db'):
+                return parent.db
+            parent = parent.__parent__
+        return None
 
 
 class DataContainer(TraversalMixin):
@@ -98,11 +103,15 @@ class DataContainer(TraversalMixin):
         raise KeyError(k)
 
     def __getitem__(self, k):
-        if self.model_class is None:
-            raise NotImplementedError('model_class must be specified')
-
         realk = k
         if self.key_converter is not None:
             realk = self.key_converter(k)
         obj = self.get_unwrapped_object(realk)
         return self.wrap(obj, self, k)
+
+
+def container_factory(model_class, key_converter=None):
+    c = type(model_class.__name__ + 'DataContainer', (DataContainer,),
+             dict(model_class=model_class,
+                  key_converter=key_converter))
+    return c

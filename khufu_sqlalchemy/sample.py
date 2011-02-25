@@ -4,22 +4,29 @@ from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.url import resource_url
 
+from sqlalchemy import Column, ForeignKey, String, Integer, Table
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
 
 from khufu_sqlalchemy import dbsession
-from khufu_sqlalchemy.traversalutils import DataContainer, TraversalMixin
+from khufu_sqlalchemy.traversalutils import attrs_traversable, container_factory, TraversalMixin
 
 
 Base = declarative_base()
 
 ## database model classes
 
+users_groups = Table('users_groups', Base.metadata,
+                     Column('userid', Integer, ForeignKey('users.id')),
+                     Column('groupid', Integer, ForeignKey('groups.id')))
+
 
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String)
+
+    groups = relationship('Group', secondary=users_groups, backref='users')
 
 
 class Group(Base):
@@ -28,25 +35,16 @@ class Group(Base):
     name = Column(String)
 
 
-## traversal model classes
-
-class UserContainer(DataContainer):
-    model_class = User
-    key_converter = int
-
-
-class GroupContainer(DataContainer):
-    model_class = Group
-    key_converter = int
-
-
 class Root(TraversalMixin, dict):
 
     def __init__(self, request):
         TraversalMixin.__init__(self, db=dbsession(request))
+        self['users'] = Users('users', self, self.db)
+        self['groups'] = Groups('groups', self, self.db)
 
-        self['users'] = UserContainer('users', self, self.db)
-        self['groups'] = GroupContainer('groups', self, self.db)
+
+Groups = container_factory(Group, int)
+Users = attrs_traversable(groups=Groups)(container_factory(User, int))
 
 
 ## views
@@ -61,9 +59,9 @@ def root(request):
 ''' % {'root_url': request.application_url})
 
 
-@view_config(context=UserContainer,
+@view_config(context=Users,
              request_method='POST')
-@view_config(context=GroupContainer,
+@view_config(context=Groups,
              request_method='POST')
 def new_item(request):
     db = dbsession(request)
@@ -91,8 +89,8 @@ def view_item(request):
             request.context.id, request.context.name))
 
 
-@view_config(context=GroupContainer)
-@view_config(context=UserContainer)
+@view_config(context=Groups)
+@view_config(context=Users)
 def listing(request):
     s = u'<a href="../">Back</a><ul>'
 
