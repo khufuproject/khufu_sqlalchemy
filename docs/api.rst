@@ -6,7 +6,4 @@
 .. automodule:: khufu_sqlalchemy
 
 .. autofunction:: includeme
-.. autofunction:: get_session_factory
-.. autofunction:: with_db
-
-.. autoclass:: SQLAHelper
+.. autofunction:: dbsession

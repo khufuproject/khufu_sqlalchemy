@@ -72,9 +72,10 @@ class DataContainer(TraversalMixin):
     model_class = None
     wrap = LocationProxy
     unique_lookup = None
+    key_converter = None
 
     def __iter__(self):
-        return (self.wrap(x, self, x.id)
+        return (self.wrap(x, self, str(x.id))
                 for x in self.db.query(self.model_class))
 
     def add(self, **kwargs):
@@ -100,5 +101,8 @@ class DataContainer(TraversalMixin):
         if self.model_class is None:
             raise NotImplementedError('model_class must be specified')
 
-        obj = self.get_unwrapped_object(k)
+        realk = k
+        if self.key_converter is not None:
+            realk = self.key_converter(k)
+        obj = self.get_unwrapped_object(realk)
         return self.wrap(obj, self, k)

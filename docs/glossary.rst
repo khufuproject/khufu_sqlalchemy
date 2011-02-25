@@ -23,14 +23,6 @@ Glossary
       connects :term:`SQLAlchemy` to general purpose
       :term:`transaction` machinery
 
-   repoze.tm2
-     `repoze.tm2 <http://docs.repoze.org/tm2/>`_ provides middleware to
-     help with transactions.
-
-   pyramid_traversalwrapper
-     `pyramid_traversalwrapper distribution <http://pypi.python.org/pypi/pyramid_traversalwrapper>`_
-     provides proxy wrappers for objects.
-
    khufu_sqlalchemy
      `khufu_sqlalchemy <https://github.com/serverzen/khufu_sqlalchemy>`_ 
      is meant to reduce the plumbing required to configure a :term:`SQLAlchemy`
@@ -39,11 +31,17 @@ Glossary
    environ
      The standard ``dict`` object passed into a WSGI callable.
 
-   NewRequest
-     The event fired before each and every :term:`Pyramid` request, see
-     `NewRequest API docs
-     <http://docs.pylonsproject.org/projects/pyramid/1.0/api/events.html#pyramid.events.NewRequest>`_
-     for further details.
-
    sqlalchemy.url
      The ``settings`` key used to derive a :term:`SQLAlchemy` engine from.
+
+   engine
+     The :term:`SQLAlchemy` database engine being used, see `Engine Configuration
+     <http://www.sqlalchemy.org/docs/core/engines.html>`_ for further details.
+
+   session factory
+     The :term:`SQLAlchemy` database session factory being used, see `Using
+     the Session <http://www.sqlalchemy.org/docs/orm/session.html>`_ for
+     further details.
+
+   pyramid_tm
+     :term:`Transaction` handling based on the :term:`transaction` package.
