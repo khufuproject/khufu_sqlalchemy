@@ -3,12 +3,17 @@
 Changes
 =======
 
-0.5b1 (unreleased)
-------------------
+0.5b1 (Feb-28-2011)
+-------------------
 
   * Backwards incompat changes with 0.4, please stay with 0.4
     to continue using middleware
 
+  * Now uses ``khufu_sqlalchemy.dbsession(request)`` for getting
+    the active db session
+
+  * ``traversalutils`` was moved out (in preparation for another
+    package
 
 0.4a4 (Feb-20-2011)
 -------------------
