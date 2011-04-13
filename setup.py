@@ -2,8 +2,8 @@ import os
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.txt')).read()
-CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
+README = open(os.path.join(here, 'README.rst')).read()
+CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
 requires = [
     'pyramid_tm',
@@ -24,7 +24,7 @@ setup(name='khufu_sqlalchemy',
       license='BSD',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
-      url='https://github.com/serverzen/khufu_sqlalchemy',
+      url='https://github.com/khufuproject/khufu_sqlalchemy',
       keywords='pyramid sqlalchemy khufu transaction',
       packages=find_packages(),
       include_package_data=True,
