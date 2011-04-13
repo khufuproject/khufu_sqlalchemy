@@ -1,0 +1,2 @@
+from {{package}} import app
+application = app({})

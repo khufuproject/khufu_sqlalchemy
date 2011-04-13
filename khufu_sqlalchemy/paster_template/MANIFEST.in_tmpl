@@ -1,0 +1,2 @@
+include *.txt
+recursive-include {{package}} *.html *.css *.png *.ico *.gif *.jpg *.ini *.txt *.wsgi

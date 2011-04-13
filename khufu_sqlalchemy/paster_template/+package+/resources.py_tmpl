@@ -1,0 +1,12 @@
+from khufu_sqlalchemy import dbsession
+
+
+class Root(object):
+
+    def __init__(self, db):
+        self.db = db
+
+
+def get_root(request):
+    root = Root(dbsession(request))
+    return root

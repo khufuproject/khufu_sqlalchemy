@@ -1,0 +1,19 @@
+from pyramid.config import Configurator
+
+import khufu_sqlalchemy
+
+from {{package}} import resources
+
+
+def app(global_conf, **kwargs):
+    settings = {}
+    settings.setdefault(khufu_sqlalchemy.SQLALCHEMY_URL, 'sqlite:///{{package}}.db')
+    settings.update(global_conf)
+    settings.update(kwargs)
+
+    config = Configurator(root_factory=resources.get_root,
+                          settings=settings)
+    config.add_static_view('{{package}}-static', '{{package}}:static')
+    config.scan('{{package}}')
+    config.include('khufu_sqlalchemy')
+    return config.make_wsgi_app()

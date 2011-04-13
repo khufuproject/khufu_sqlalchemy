@@ -1,0 +1,25 @@
+import unittest
+
+
+class TestViews(unittest.TestCase):
+
+    def test_main(self):
+        from khufu_sqlalchemy import DBSESSION
+        from {{package}}.views import main
+        response = main(Mock(environ={DBSESSION: db}))
+        self.assertEqual(response['project'], '{{project}}')
+
+
+class TestResources(unittest.TestCase):
+
+    def test_get_root(self):
+        from khufu_sqlalchemy import DBSESSION
+        from {{package}}.resources import get_root
+        db = object()
+        root = get_root(Mock(environ={DBSESSION: db}))
+        self.assertEqual(root.db, db)
+        
+        
+class Mock(object):
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)

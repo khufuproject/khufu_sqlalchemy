@@ -31,5 +31,8 @@ setup(name='khufu_sqlalchemy',
       zip_safe=False,
       install_requires=requires,
       test_suite="khufu_sqlalchemy.tests",
-      entry_points='',
+      entry_points="""
+        [paste.paster_create_template]
+        khufu_sqlalchemy=khufu_sqlalchemy.paster:KhufuSQLAlchemyProjectTemplate
+      """
       )

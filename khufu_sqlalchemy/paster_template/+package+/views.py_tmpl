@@ -1,0 +1,11 @@
+from {{package}} import models, resources
+from pyramid.view import view_config
+from khufu_sqlalchemy import dbsession
+
+
+@view_config(context=resources.Root,
+             renderer='{{package}}:templates/mytemplate.pt')
+def main(request):
+    db = dbsession(request)
+    return {'project': '{{project}}',
+            'resources': db.query(models.MyDataModel).all()}
