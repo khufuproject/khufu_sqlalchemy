@@ -60,11 +60,8 @@ class TestDBSession(unittest.TestCase):
         self.assertEqual(dbsession(req), marker)
 
     def test_context(self):
-        from sqlalchemy.orm.exc import UnmappedInstanceError
         from khufu_sqlalchemy import dbsession
         req = Mock(environ={}, context=Mock())
-        self.assertRaises(UnmappedInstanceError, dbsession, req)
-
         req.context.db = marker = object()
         self.assertEqual(dbsession(req), marker)
 

@@ -55,7 +55,11 @@ def dbsession(request, create=True):
         context = request.context
         if hasattr(context, 'db'):
             return context.db
-        return sqlalchemy.orm.object_session(context)
+        try:
+            environ[DBSESSION] = sqlalchemy.orm.object_session(context)
+            return environ[DBSESSION]
+        except sqlalchemy.orm.exc.UnmappedInstanceError:
+            pass
 
     if create:
         environ[DBSESSION] = request.registry.settings[DBSESSION_FACTORY]()
