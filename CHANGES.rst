@@ -1,6 +1,11 @@
 Changes
 =======
 
+0.5b2 (unreleased)
+------------------
+
+  * Made dbsession() lookup a little more clever
+
 0.5b1 (Feb-28-2011)
 -------------------
 
