@@ -1,1 +1,1 @@
-global-include *.ini *.css *.png *.ico *.gif *.py_tmpl *.ini_tmpl *.jinja2_tmpl *.txt_tmpl *.wsgi_tmpl *.in_tmpl *.js *.txt *.pt_tmpl
+global-include .gitignore Makefile conf.py *.rst *.ini *.css *.png *.ico *.gif *.py_tmpl *.ini_tmpl *.jinja2_tmpl *.txt_tmpl *.wsgi_tmpl *.in_tmpl *.js *.txt *.pt_tmpl
