@@ -66,7 +66,7 @@
 <h1>khufu_sqlalchemy<a class="headerlink" href="#khufu-sqlalchemy" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>khufu_sqlalchemy is an opinionated way of managing <a class="reference internal" href="glossary.html#term-sqlalchemy"><em class="xref std std-term">SQLAlchemy</em></a> based
+<p><em>khufu_sqlalchemy</em> is an opinionated way of managing <a class="reference internal" href="glossary.html#term-sqlalchemy"><em class="xref std std-term">SQLAlchemy</em></a> based
 connections with <a class="reference internal" href="glossary.html#term-pyramid"><em class="xref std std-term">Pyramid</em></a>.</p>
 </div>
 <div class="section" id="requirements">
@@ -166,6 +166,14 @@ will each return the same session as long as the request is the same.</p>
 <p>If your application requires control over the transaction handling,
 please use the <a class="reference internal" href="glossary.html#term-transaction"><em class="xref std std-term">transaction</em></a> and <a class="reference internal" href="glossary.html#term-pyramid-tm"><em class="xref std std-term">pyramid_tm</em></a> api&#8217;s.</p>
 </div>
+<div class="section" id="paster-template">
+<h2>Paster Template<a class="headerlink" href="#paster-template" title="Permalink to this headline">¶</a></h2>
+<p><em>khufu_sqlalchemy</em> provides a paster template for starting out a
+project using <em>khufu_sqlalchemy</em>.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>paster create -t khufu_sqlalchemy myproject
+</pre></div>
+</td></tr></table></div>
+</div>
 <div class="section" id="credits">
 <h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
 <blockquote>
@@ -208,6 +216,7 @@ please use the <a class="reference internal" href="glossary.html#term-transactio
 <li><a class="reference internal" href="#setup">Setup</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#transaction-handling">Transaction Handling</a></li>
+<li><a class="reference internal" href="#paster-template">Paster Template</a></li>
 <li><a class="reference internal" href="#credits">Credits</a></li>
 <li><a class="reference internal" href="#more-information">More Information</a><ul>
 </ul>
