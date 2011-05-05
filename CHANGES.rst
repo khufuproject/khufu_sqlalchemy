@@ -1,8 +1,10 @@
 Changes
 =======
 
-0.5b2 (unreleased)
-------------------
+0.5 (May-04-2011)
+-----------------
+
+  * Added new *khufu_sqlalchemy* paster template
 
   * Made dbsession() lookup a little more clever
 
