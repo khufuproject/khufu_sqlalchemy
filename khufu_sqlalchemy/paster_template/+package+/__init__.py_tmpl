@@ -1,19 +1,17 @@
 from pyramid.config import Configurator
-
-import khufu_sqlalchemy
-
-from {{package}} import resources
+from {{package}}.resources import Root
 
 
-def app(global_conf, **kwargs):
-    settings = {}
+def main(global_conf, **settings):
+    """ This function returns a Pyramid WSGI application.
+    """
+    settings = dict(settings)
     settings.setdefault(khufu_sqlalchemy.SQLALCHEMY_URL, 'sqlite:///{{package}}.db')
-    settings.update(global_conf)
-    settings.update(kwargs)
 
-    config = Configurator(root_factory=resources.get_root,
-                          settings=settings)
-    config.add_static_view('{{package}}-static', '{{package}}:static')
-    config.scan('{{package}}')
+    config = Configurator(root_factory=Root, settings=settings)
     config.include('khufu_sqlalchemy')
+    config.add_static_view('static', '{{package}}:static')
+    config.add_view('{{package}}.views.my_view',
+                    context='{{package}}.resources.Root',
+                    renderer='{{package}}:templates/mytemplate.pt')
     return config.make_wsgi_app()

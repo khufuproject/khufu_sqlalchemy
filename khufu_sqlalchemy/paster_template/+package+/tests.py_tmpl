@@ -1,25 +1,27 @@
-import unittest
+import unittest                                                                 
+
+from pyramid import testing
 
 
-class TestViews(unittest.TestCase):
+class ViewTests(unittest.TestCase):
+    def setUp(self):
+        self.config = testing.setUp()
 
-    def test_main(self):
-        from khufu_sqlalchemy import DBSESSION
-        from {{package}}.views import main
-        response = main(Mock(environ={DBSESSION: db}))
-        self.assertEqual(response['project'], '{{project}}')
+    def tearDown(self):
+        testing.tearDown()
 
+    def test_my_view(self):
+        import khufu_sqlalchemy
+        from {{package}}.views import my_view
+        request = testing.DummyRequest()
+        request.registry.settings[khufu_sqlalchemy.DBSESSION_FACTORY] = MockSession
+    	info = my_view(request)
+	self.assertEqual(info['project'], '{{project}}')
+	self.assertEqual(len(info['resources']), 0)
 
-class TestResources(unittest.TestCase):
+class MockSession(object):
+    def query(self, *args, **kwargs):
+        return self
 
-    def test_get_root(self):
-        from khufu_sqlalchemy import DBSESSION
-        from {{package}}.resources import get_root
-        db = object()
-        root = get_root(Mock(environ={DBSESSION: db}))
-        self.assertEqual(root.db, db)
-        
-        
-class Mock(object):
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+    def all(self):
+        return []
