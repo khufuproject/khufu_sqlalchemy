@@ -5,7 +5,7 @@ khufu_sqlalchemy
 Overview
 ========
 
-khufu_sqlalchemy is an opinionated way of managing :term:`SQLAlchemy` based
+*khufu_sqlalchemy* is an opinionated way of managing :term:`SQLAlchemy` based
 connections with :term:`Pyramid`.
 
 Requirements
@@ -89,6 +89,18 @@ Transaction Handling
 
 If your application requires control over the transaction handling,
 please use the :term:`transaction` and :term:`pyramid_tm` api's.
+
+Paster Template
+===============
+
+*khufu_sqlalchemy* provides a paster template for starting out a
+project using *khufu_sqlalchemy*.
+
+.. code-block:: bash
+  :linenos:
+
+  $ paster create -t khufu_sqlalchemy myproject
+
 
 Credits
 =======
