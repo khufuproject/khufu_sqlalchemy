@@ -36,33 +36,40 @@ def includeme(config):
     _setup_factory(config.registry)
 
 
-def dbsession(request, create=True):
-    '''Return the active database session from the object specified.
+class _DBSessionFinder(object):
 
-    :param request: Normally an instance of ``pyramid.request.Request``
-                    but can be any object with ``environ`` and ``registry``
-                    attrs
-    :param create: If no db session is active on the reqeust, create one,
-                   defaults to True
-    '''
+    _object_session = staticmethod(sqlalchemy.orm.object_session)
 
-    environ = request.environ
+    def __call__(self, request, create=True):
+        '''Return the active database session from the object specified.
 
-    if DBSESSION in environ:
-        return environ[DBSESSION]
+        :param request: Normally an instance of ``pyramid.request.Request``
+                        but can be any object with ``environ`` and ``registry``
+                        attrs
+        :param create: If no db session is active on the reqeust, create one,
+                       defaults to True
+        '''
 
-    if hasattr(request, 'context'):
-        context = request.context
-        if hasattr(context, 'db'):
-            return context.db
-        try:
-            environ[DBSESSION] = sqlalchemy.orm.object_session(context)
+        environ = request.environ
+
+        if DBSESSION in environ:
             return environ[DBSESSION]
-        except sqlalchemy.orm.exc.UnmappedInstanceError:
-            pass
 
-    if create:
-        environ[DBSESSION] = request.registry.settings[DBSESSION_FACTORY]()
-        return environ[DBSESSION]
+        if hasattr(request, 'context'):
+            context = request.context
+            if hasattr(context, 'db'):
+                return context.db
+            try:
+                environ[DBSESSION] = self._object_session(context)
+                return environ[DBSESSION]
+            except sqlalchemy.orm.exc.UnmappedInstanceError:
+                pass
 
-    return None
+        if create:
+            environ[DBSESSION] = request.registry.settings[DBSESSION_FACTORY]()
+            return environ[DBSESSION]
+
+        return None
+
+
+dbsession = _DBSessionFinder()
