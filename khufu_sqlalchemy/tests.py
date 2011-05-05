@@ -65,6 +65,19 @@ class TestDBSession(unittest.TestCase):
         req.context.db = marker = object()
         self.assertEqual(dbsession(req), marker)
 
+    def test_object_session(self):
+        from khufu_sqlalchemy import _DBSessionFinder
+        dbsession = _DBSessionFinder()
+        req = Mock(environ={}, context=Mock(),
+                   registry=Mock(settings={}))
+        self.assertEqual(dbsession(req, False), None)
+
+        marker = object()
+        dbsession._object_session = lambda x: marker
+        req = Mock(environ={}, context=Mock(),
+                  registry=Mock(settings={}))
+        self.assertEqual(dbsession(req, False), marker)
+
     def test_create(self):
         from khufu_sqlalchemy import dbsession, DBSESSION_FACTORY
 
