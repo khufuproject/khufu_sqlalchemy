@@ -146,7 +146,7 @@ nothing else needs to be looked up by <a class="reference internal" href="glossa
 5
 6
 7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyramid.view</span> <span class="kn">import</span> <span class="n">view_config</span>
-<span class="kn">from</span> <span class="nn">pyramid_sqlalchemy</span> <span class="kn">import</span> <span class="n">dbsession</span>
+<span class="kn">from</span> <span class="nn">khufu_sqlalchemy</span> <span class="kn">import</span> <span class="n">dbsession</span>
 
 <span class="nd">@view_config</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">SomeContainer</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">users_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
@@ -170,9 +170,9 @@ please use the <a class="reference internal" href="glossary.html#term-transactio
 <h2>Paster Template<a class="headerlink" href="#paster-template" title="Permalink to this headline">¶</a></h2>
 <p><em>khufu_sqlalchemy</em> provides a paster template for starting out a
 project using <em>khufu_sqlalchemy</em>.</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>paster create -t khufu_sqlalchemy myproject
+<div class="highlight-bash"><div class="highlight"><pre>paster create -t khufu_sqlalchemy myproject
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="credits">
 <h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h2>
