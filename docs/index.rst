@@ -69,7 +69,7 @@ The standard way to lookup the active database session is as follows:
  :linenos:
 
  from pyramid.view import view_config
- from pyramid_sqlalchemy import dbsession
+ from khufu_sqlalchemy import dbsession
 
  @view_config(context=SomeContainer)
  def users_view(request):
