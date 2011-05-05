@@ -97,9 +97,8 @@ Paster Template
 project using *khufu_sqlalchemy*.
 
 .. code-block:: bash
-  :linenos:
 
-  $ paster create -t khufu_sqlalchemy myproject
+  paster create -t khufu_sqlalchemy myproject
 
 
 Credits
