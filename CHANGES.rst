@@ -1,6 +1,14 @@
 Changes
 =======
 
+0.5.1 (unreleased)
+------------------
+
+  * Now uses scoped_session for session factory by default
+
+  * sessions created by ``dbsession()`` are now closed upon finishing the
+    request
+
 0.5 (May-04-2011)
 -----------------
 
