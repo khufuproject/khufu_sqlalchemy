@@ -4,6 +4,9 @@ Changes
 0.5.1 (unreleased)
 ------------------
 
+  * Put in hack to work around bug with connection pooling and sqlite
+    https://github.com/Pylons/pyramid/issues/174
+
   * Now uses scoped_session for session factory by default
 
   * sessions created by ``dbsession()`` are now closed upon finishing the

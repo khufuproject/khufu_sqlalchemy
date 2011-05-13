@@ -30,7 +30,20 @@ def _setup_factory(registry):
         return factory
 
     url = settings[SQLALCHEMY_URL]
-    engine = settings[DBSESSION_ENGINE] = sqlalchemy.create_engine(url)
+    kwargs = {}
+    if url.startswith('sqlite:'):
+        # dealing with a problem with closed connections
+        # https://github.com/Pylons/pyramid/issues/174
+        import pkg_resources
+        pkg = pkg_resources.get_distribution('SQLAlchemy<0.7dev')
+        if pkg != None:
+            logger.warn('Working around bug with connection pooling and '
+                        'sqlite - '
+                        'https://github.com/Pylons/pyramid/issues/174')
+            from sqlalchemy.pool import NullPool
+            kwargs['poolclass'] = NullPool
+    engine = settings[DBSESSION_ENGINE] = \
+        sqlalchemy.create_engine(url, **kwargs)
     return _setup_factory(registry)
 
 
