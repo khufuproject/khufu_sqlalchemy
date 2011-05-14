@@ -1,5 +1,6 @@
 from pyramid.config import Configurator
 from {{package}}.resources import Root
+import khufu_sqlalchemy
 
 
 def main(global_conf, **settings):
