@@ -88,5 +88,6 @@ class TestDBSession(unittest.TestCase):
         def foo():
             return marker
         m = Mock(environ={},
+                 add_finished_callback=lambda x: None,
                  registry=Mock(settings={DBSESSION_FACTORY: foo}))
         self.assertEqual(dbsession(m, create=True), marker)
