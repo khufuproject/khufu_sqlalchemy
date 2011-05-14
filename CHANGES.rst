@@ -1,8 +1,8 @@
 Changes
 =======
 
-0.5.1 (unreleased)
-------------------
+0.5.1 (May-14-2011)
+-------------------
 
   * Fixed bad import in the paster template
 
