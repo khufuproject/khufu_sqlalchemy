@@ -4,6 +4,8 @@ Changes
 0.5.1 (unreleased)
 ------------------
 
+  * Fixed bad import in the paster template
+
   * Put in hack to work around bug with connection pooling and sqlite
     https://github.com/Pylons/pyramid/issues/174
 
