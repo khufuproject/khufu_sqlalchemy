@@ -35,7 +35,7 @@ def _setup_factory(registry):
         # dealing with a problem with closed connections
         # https://github.com/Pylons/pyramid/issues/174
         import pkg_resources
-        pkg = pkg_resources.get_distribution('SQLAlchemy<0.7dev')
+        pkg = pkg_resources.get_distribution('SQLAlchemy')
         if pkg != None:
             logger.warn('Working around bug with connection pooling and '
                         'sqlite - '
@@ -58,6 +58,9 @@ class _DBSessionFinder(object):
 
     _object_session = staticmethod(sqlalchemy.orm.object_session)
 
+    def __init__(self):
+        self.count = 0
+
     def __call__(self, request, create=True):
         '''Return the active database session from the object specified.
 
@@ -68,7 +71,7 @@ class _DBSessionFinder(object):
                        defaults to True
         '''
 
-        environ = request.environ
+        environ = getattr(request, 'environ') or {}
 
         if DBSESSION in environ:
             return environ[DBSESSION]
@@ -85,10 +88,14 @@ class _DBSessionFinder(object):
 
         if create:
             environ[DBSESSION] = request.registry.settings[DBSESSION_FACTORY]()
+            self.count += 1
+            logger.debug('db session acquired (%i)' % self.count)
 
             def close(request, dbsession=environ[DBSESSION]):
                 try:
                     dbsession.close()
+                    self.count -= 1
+                    logger.debug('db session closed (%i)' % self.count)
                 except Exception, ex:
                     logger.warning(str(ex))
             request.add_finished_callback(close)
