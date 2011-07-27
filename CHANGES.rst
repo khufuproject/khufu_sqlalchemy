@@ -1,6 +1,13 @@
 Changes
 =======
 
+Unreleased
+----------
+
+  * now tries to make sure the active context is part of the active db session
+
+  * Various fixes to make session lookup more rigourous
+
 0.5.2 (Jul-10-2011)
 -------------------
 
