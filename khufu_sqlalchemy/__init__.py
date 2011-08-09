@@ -101,6 +101,9 @@ class _DBSessionFinder(object):
                 self.count -= 1
                 logger.debug('db session closed (%i)' % self.count)
                 dbsession.close()
+                if hasattr(dbsession, 'remove'):
+                    logger.debug('db session removed (%i)' % self.count)
+                    dbsession.remove()
             except Exception, ex:
                 logger.warning(str(ex))
         request.add_finished_callback(close)
@@ -143,10 +146,10 @@ class _DBSessionFinder(object):
             session = getattr(request, 'db', None)
 
         if session is None and hasattr(request, 'context'):
-            session = self.get_session_from_context(request, request.context)
+            session = self.get_session_from_obj(request, request.context)
 
-        if (session is None or not session.is_active) and create:
-            if session is not None and not session.is_active:
+        if (session is None or not _is_active(session)) and create:
+            if session is not None and not _is_active(session):
                 logger.warning('Dropped db session due to being inactive')
             session = self.setup_session(request)
 
@@ -166,5 +169,10 @@ class _DBSessionFinder(object):
                     session.merge(obj)
 
         return session
+
+
+def _is_active(s):
+    return getattr(s, 'is_active', True)
+
 
 dbsession = _DBSessionFinder()
