@@ -1,8 +1,8 @@
 Changes
 =======
 
-Unreleased
-----------
+0.5.3 (Jul-10-2011)
+-------------------
 
   * now tries to make sure the active context is part of the active db session
 
