@@ -85,6 +85,9 @@ class _DBSessionFinder(object):
 
     def setup_session(self, request):
         environ = request.environ
+        if DBSESSION_FACTORY not in request.registry.settings:
+            raise ValueError('Please configure khufu_sqlalchemy')
+
         environ[DBSESSION] = request.registry.settings[DBSESSION_FACTORY]()
 
         if request.registry.settings.get('DEBUG', False):
