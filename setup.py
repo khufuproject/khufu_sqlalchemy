@@ -13,7 +13,7 @@ requires = [
     ]
 
 setup(name='khufu_sqlalchemy',
-      version='0.5.3',
+      version='1.0a1',
       description='SQLAlchemy bindings for Pyramid',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
